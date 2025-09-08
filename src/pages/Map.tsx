@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useSearchParams } from "react-router-dom";
 import L from "leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,21 +25,6 @@ const stopIcon = L.divIcon({
   iconSize: [20, 20],
   iconAnchor: [10, 10]
 });
-
-const MapUpdater = ({ buses }: { buses: Bus[] }) => {
-  const map = useMap();
-  
-  useEffect(() => {
-    if (buses.length > 0) {
-      const group = new L.FeatureGroup(buses.map(bus => 
-        L.marker([bus.lat, bus.lng])
-      ));
-      map.fitBounds(group.getBounds().pad(0.1));
-    }
-  }, [buses, map]);
-  
-  return null;
-};
 
 const Map = () => {
   const [searchParams] = useSearchParams();
@@ -148,8 +133,6 @@ const Map = () => {
                     url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                   />
-                  
-                  <MapUpdater buses={filteredBuses} />
                   
                   {/* Bus Markers */}
                   {filteredBuses.map((bus) => {
