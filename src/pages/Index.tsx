@@ -18,7 +18,7 @@ const Index = () => {
             <div className="mb-8">
               <Bus className="w-16 h-16 text-primary mx-auto mb-6" />
               <h1 className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-button bg-clip-text text-transparent">
-                CityBus Live
+                ConnectVI
               </h1>
               <p className="text-xl lg:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Track your bus in real-time with precise GPS location updates every 5 seconds. 

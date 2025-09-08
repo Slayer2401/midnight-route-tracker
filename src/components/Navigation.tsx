@@ -18,7 +18,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center space-x-2">
             <Bus className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold bg-gradient-button bg-clip-text text-transparent">
-              CityBus
+              ConnectVI
             </span>
           </Link>
           
