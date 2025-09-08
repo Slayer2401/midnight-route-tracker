@@ -57,6 +57,25 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        /* Bus Tracking Theme Colors */
+        "bus-live": "hsl(var(--bus-live))",
+        "bus-route": "hsl(var(--bus-route))",
+        "stop-marker": "hsl(var(--stop-marker))",
+        "map-overlay": "hsl(var(--map-overlay))",
+      },
+      backgroundImage: {
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+        "gradient-button": "var(--gradient-button)",
+      },
+      boxShadow: {
+        "glow": "var(--shadow-glow)",
+        "card": "var(--shadow-card)",
+        "button": "var(--shadow-button)",
+      },
+      transitionTimingFunction: {
+        "smooth": "var(--transition-smooth)",
+        "bounce": "var(--transition-bounce)",
       },
       borderRadius: {
         lg: "var(--radius)",
