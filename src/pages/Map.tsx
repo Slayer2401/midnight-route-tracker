@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import L from "leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, Navigation } from "lucide-react";
 import { busStops, busRoutes, liveBuses, Bus } from "@/data/busData";
-import "leaflet/dist/leaflet.css";
-
-// Custom icons - no need for default markers since we use custom div icons
-
-// Custom bus icon
-const busIcon = L.divIcon({
-  html: `<div style="background: #22c55e; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 2px 10px rgba(34, 197, 94, 0.4);">🚌</div>`,
-  className: 'custom-div-icon',
-  iconSize: [30, 30],
-  iconAnchor: [15, 15]
-});
-
-// Custom stop icon  
-const stopIcon = L.divIcon({
-  html: `<div style="background: #f59e0b; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 2px solid white; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);">●</div>`,
-  className: 'custom-div-icon',
-  iconSize: [20, 20],
-  iconAnchor: [10, 10]
-});
 
 const Map = () => {
   const [searchParams] = useSearchParams();
@@ -119,81 +98,30 @@ const Map = () => {
             </Card>
           </div>
 
-          {/* Map */}
+          {/* Map Placeholder */}
           <div className="lg:col-span-3">
             <Card className="bg-gradient-card border-border shadow-card overflow-hidden">
-              <div className="h-[600px] relative">
-                <MapContainer
-                  center={[40.7589, -73.9851]}
-                  zoom={13}
-                  className="h-full w-full rounded-lg"
-                  style={{ background: '#1a1a1a' }}
-                >
-                  <TileLayer
-                    url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                  />
-                  
-                  {/* Bus Markers */}
-                  {filteredBuses.map((bus) => {
-                    const route = getRouteInfo(bus.routeId);
-                    const nextStop = busStops.find(stop => stop.id === bus.nextStop);
-                    return (
-                      <Marker
-                        key={bus.id}
-                        position={[bus.lat, bus.lng]}
-                        icon={busIcon}
-                      >
-                        <Popup className="custom-popup">
-                          <div className="p-2 bg-card text-foreground rounded">
-                            <h3 className="font-semibold text-bus-live mb-2">
-                              🚌 {route?.name}
-                            </h3>
-                            <div className="space-y-1 text-sm">
-                              <div>Speed: {bus.speed} km/h</div>
-                              <div>Next Stop: {nextStop?.name}</div>
-                              <div>Updated: {new Date(bus.lastUpdate).toLocaleTimeString()}</div>
-                            </div>
-                          </div>
-                        </Popup>
-                      </Marker>
-                    );
-                  })}
-                  
-                  {/* Stop Markers */}
-                  {filteredStops.map((stop) => (
-                    <Marker
-                      key={stop.id}
-                      position={[stop.lat, stop.lng]}
-                      icon={stopIcon}
-                    >
-                      <Popup className="custom-popup">
-                        <div className="p-2 bg-card text-foreground rounded">
-                          <h3 className="font-semibold text-stop-marker mb-2">
-                            📍 {stop.name}
-                          </h3>
-                          <div className="text-sm">
-                            <div className="mb-1">Routes:</div>
-                            <div className="flex flex-wrap gap-1">
-                              {stop.routes.map(routeId => {
-                                const route = getRouteInfo(routeId);
-                                return (
-                                  <Badge
-                                    key={routeId}
-                                    style={{ backgroundColor: route?.color }}
-                                    className="text-white text-xs"
-                                  >
-                                    {route?.name}
-                                  </Badge>
-                                );
-                              })}
-                            </div>
-                          </div>
+              <div className="h-[600px] relative bg-muted flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">🗺️</div>
+                  <h3 className="text-xl font-semibold mb-2">Interactive Map Loading...</h3>
+                  <p className="text-muted-foreground">
+                    Map will display {filteredBuses.length} live buses and {filteredStops.length} stops
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    {filteredBuses.map((bus) => {
+                      const route = getRouteInfo(bus.routeId);
+                      return (
+                        <div key={bus.id} className="flex items-center justify-between p-2 bg-background rounded">
+                          <span>🚌 {route?.name}</span>
+                          <span className="text-sm text-muted-foreground">
+                            {bus.lat.toFixed(4)}, {bus.lng.toFixed(4)}
+                          </span>
                         </div>
-                      </Popup>
-                    </Marker>
-                  ))}
-                </MapContainer>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </Card>
           </div>
